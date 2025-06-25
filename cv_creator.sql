@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 17 juin 2025 à 18:47
+-- Généré le : lun. 23 juin 2025 à 18:09
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -87,11 +87,12 @@ CREATE TABLE `skills` (
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `first_name` varchar(25) DEFAULT NULL,
-  `last_name` varchar(25) DEFAULT NULL,
+  `username` varchar(12) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `email` varchar(120) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `first_name` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `last_name` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `age` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -165,7 +166,7 @@ ALTER TABLE `skills`
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Contraintes pour les tables déchargées

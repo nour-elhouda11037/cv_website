@@ -14,7 +14,6 @@
       <div class="buttons">
         <a href="signup.php" class="btn">Get Started</a>
         <a href="login.php" class="btn secondary">Login</a>
-        <a href="signup.php" class="btn secondary">Sign up</a>
       </div>
     </div>
   </header>
