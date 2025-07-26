@@ -1,7 +1,10 @@
 <?php
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Resume;
-class ResumeController extends Controller{
+use App\Models\Education;
+use App\Models\Experience;
+use App\Models\Skill;class ResumeController extends Controller{
 
 
        public function showForm($id = null)
@@ -34,6 +37,60 @@ class ResumeController extends Controller{
         'experience' => $experience,
         'skills' => $skills,
     ]);
+}
+    public function store(Request $request)
+{
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'school_name' => 'required|array',
+        'degree' => 'required|array',
+        'edu_start' => 'required|array',
+        'edu_end' => 'required|array',
+        'company_name' => 'required|array',
+        'position' => 'required|array',
+        'exp_start' => 'required|array',
+        'exp_end' => 'required|array',
+        'skill' => 'required|array',
+        'level' => 'required|array',
+    ]);
+
+    $resume = Resume::create([
+        'id_user' => Auth::id(),
+        'title' => $request->title,
+        'created_at' => now(),
+    ]);
+
+    foreach ($request->school_name as $i => $school) {
+        Education::create([
+            'id_resume' => $resume->id,
+            'school_name' => $school,
+            'degree' => $request->degree[$i],
+            'start_date' => $request->edu_start[$i],
+            'end_date' => $request->edu_end[$i],
+            'description' => $request->edu_desc[$i] ?? '',
+        ]);
+    }
+
+    foreach ($request->company_name as $i => $company) {
+        Experience::create([
+            'id_resume' => $resume->id,
+            'company_name' => $company,
+            'position' => $request->position[$i],
+            'start_date' => $request->exp_start[$i],
+            'end_date' => $request->exp_end[$i],
+            'description' => $request->exp_desc[$i] ?? '',
+        ]);
+    }
+
+    foreach ($request->skill as $i => $skill) {
+        Skill::create([
+            'id_resume' => $resume->id,
+            'skill' => $skill,
+            'level' => $request->level[$i],
+        ]);
+    }
+
+    return redirect()->route('dashboard')->with('success', 'CV saved!');
 }
 }
 ?>
