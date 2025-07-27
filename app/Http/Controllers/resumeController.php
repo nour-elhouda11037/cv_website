@@ -1,10 +1,13 @@
 <?php
+namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Resume;
 use App\Models\Education;
+use App\Models\Skill;
 use App\Models\Experience;
-use App\Models\Skill;class ResumeController extends Controller{
+use Barryvdh\DomPDF\Facade\Pdf;
+use Inertia\Inertia;class ResumeController extends Controller{
 
 
        public function showForm($id = null)
@@ -76,6 +79,7 @@ use App\Models\Skill;class ResumeController extends Controller{
             'id_resume' => $resume->id,
             'company_name' => $company,
             'position' => $request->position[$i],
+
             'start_date' => $request->exp_start[$i],
             'end_date' => $request->exp_end[$i],
             'description' => $request->exp_desc[$i] ?? '',
@@ -91,6 +95,17 @@ use App\Models\Skill;class ResumeController extends Controller{
     }
 
     return redirect()->route('dashboard')->with('success', 'CV saved!');
+}
+public function export($id)
+{
+    $resume = Resume::where('id', $id)->where('id_user', auth()->id())->firstOrFail();
+    $education = Education::where('id_resume', $id)->get();
+
+
+    $experience = Experience::where('id_resume', $id)->get();
+    $skills = Skill::where('id_resume', $id)->get();
+    $pdf = Pdf::loadView('export', compact('resume', 'education', 'experience', 'skills'));
+    return $pdf->download($resume->title . '_CV.pdf');
 }
 }
 ?>
