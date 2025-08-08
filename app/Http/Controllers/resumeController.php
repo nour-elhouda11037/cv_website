@@ -10,24 +10,22 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Inertia\Inertia;class ResumeController extends Controller{
 
 
-       public function showForm($id = null)
-    {
-        if (!Auth::check()) {
-            return redirect('/login');
-        }
-        $resume = null;
-        $editing = false;
-        if ($id) {
-            $resume = Resume::where('id', $id)->where('id_user', Auth::id())->first();
-            if (!$resume) {
-                return back()->withErrors(['resume' => 'Invalid Resume']);
-            }
-            $editing = true;
-        }
+       public function create(){
+    return Inertia::render('Form', ['resume' => null]);}
+
+        public function edit($id){
+    $resume = Resume::where('id', $id)->where('id_user', Auth::id())->firstOrFail();
+    $education = $resume->education;
+    $experience = $resume->experience;
+    $skills = $resume->skills;
+    return Inertia::render('Form', [
+        'resume' => $resume,
+        'education' => $education,
+        'experience' => $experience,
 
 
-        return view('form', compact('resume', 'editing'));
-    }
+        'skills' => $skills,
+    ]);}
     public function show($id)
 {
     $resume = Resume::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
@@ -91,11 +89,21 @@ use Inertia\Inertia;class ResumeController extends Controller{
             'id_resume' => $resume->id,
             'skill' => $skill,
             'level' => $request->level[$i],
-        ]);
-    }
+        ]);}
 
-    return redirect()->route('dashboard')->with('success', 'CV saved!');
+    return redirect()->route('dashboard')->with('success', 'CV saved successfully!');
 }
+
+   public function destroy($id){
+    $resume = Resume::where('id', $id)->where('id_user', Auth::id())->firstOrFail();
+
+    $resume->education()->delete();
+    $resume->experience()->delete();
+    $resume->skills()->delete();
+    $resume->delete();
+return redirect()->route('dashboard')->with('success', 'CV deleted successfully');}
+
+
 public function export($id)
 {
     $resume = Resume::where('id', $id)->where('id_user', auth()->id())->firstOrFail();
@@ -108,4 +116,4 @@ public function export($id)
     return $pdf->download($resume->title . '_CV.pdf');
 }
 }
-?>
+

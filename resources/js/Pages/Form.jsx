@@ -16,6 +16,7 @@ export default function Form() {
         exp_start: [''],
         exp_end: [''],
         exp_desc: [''],
+        
         skill: [''],
         level: ['Beginner'],
     })
