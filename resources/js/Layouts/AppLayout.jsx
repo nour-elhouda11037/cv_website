@@ -1,19 +1,32 @@
 import React from 'react'
-import AppLayout from '@/Layouts/AppLayout'
+import { Link, usePage } from '@inertiajs/react'
 
-export default function Home() {
+export default function AppLayout({ children }) {
+    const { auth } = usePage().props
+
     return (
-        <AppLayout>
-            <header className="hero">
-                <div className="hero-content">
-                    <h1>Create Your CV Easily</h1>
-                    <p>Build, export and manage your CV in just a few clicks!</p>
-                    <div className="buttons">
-                        <Link href="/signup" className="btn">Get Started</Link>
-                        <Link href="/login" className="btn secondary">Login</Link>
-                    </div>
-                </div>
-            </header>
-        </AppLayout>
+      <div className="app">
+        <nav className="nav">
+          <Link href="/">Home</Link>
+
+          {auth?.user ? (
+           <>
+             <Link href="/dashboard">Dashboard</Link>
+             <Link href={route('logout')} method="post" as="button">
+               Logout
+             </Link>
+           </>
+          ) : (
+           <>
+             <Link href="/login">Login</Link>
+             <Link href="/register">Sign up</Link>
+           </>
+          )}
+        </nav>
+
+        <main>{children}</main>
+
+        <footer className="footer">© 2025 CV Builder</footer>
+      </div>
     )
-}
+  }
