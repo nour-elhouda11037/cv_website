@@ -1,5 +1,7 @@
 import { useForm } from '@inertiajs/react'
 import React from 'react'
+import "../../css/style.css";
+import "../../css/app.css";
 export default function Register() {
     const { data, setData, post, processing, errors } = useForm({
         username: '',

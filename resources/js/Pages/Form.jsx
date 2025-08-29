@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-
+import "../../css/style.css";
+import "../../css/app.css";
 import { useForm } from '@inertiajs/react'
 
 export default function Form() {

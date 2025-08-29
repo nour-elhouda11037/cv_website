@@ -1,7 +1,8 @@
 import React from 'react'
 import { usePage, Link } from '@inertiajs/react'
 import { Inertia } from '@inertiajs/inertia'
-
+import "../../css/style.css";
+import "../../css/app.css";
 export default function Dashboard() {
     const { auth, resumes = [] } = usePage().props
     return (

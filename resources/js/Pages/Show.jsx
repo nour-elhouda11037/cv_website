@@ -1,4 +1,6 @@
 import React from 'react'
+import "../../css/style.css";
+import "../../css/app.css";
 import { usePage, Link } from '@inertiajs/react'
 
 export default function ShowCV() {
