@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
 :root {
     --main-blue: #4f46e5;
     --blue-hover: #4338ca;
@@ -15,10 +16,12 @@
     padding: 0;}
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     background-color: #f9fafb; 
     color: #333;
-    line-height: 1.5;}
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.5;}
 
 .container {
     width: 90%;
@@ -27,11 +30,15 @@ body {
     padding: 0 15px;}
 
 .nav {
-    background-color: var(--white);
-    padding: 1rem 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin-bottom: 2rem;
-    flex-wrap: wrap;}
+    background:var(--white);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 0;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+    position:sticky;
+    z-index:50;
+    top:0;}
 
 .nav a {
     color: var(--text-dark);

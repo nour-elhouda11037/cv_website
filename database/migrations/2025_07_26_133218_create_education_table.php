@@ -13,8 +13,14 @@ return new class extends Migration
     {
         Schema::create('education', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-        });
+            $table->foreignId('resume_id')->constrained('resumes')->onDelete('cascade');
+            $table->string('school_name');
+            $table->string('degree');
+            $table->date('edu_start');
+            $table->date('edu_end')->nullable();
+            $table->text('edu_desc')->nullable();
+            $table->timestamps();});
+
     }
 
     /**

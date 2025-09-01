@@ -21,20 +21,13 @@ export default function Dashboard() {
                             <Link href={`/show/${cv.id}`}>Show</Link>{' '}
                             <Link href={`/export/${cv.id}`}>Export</Link>{' '}
 
-                            <Link
-                                href={`/delete/${cv.id}`}
-                                method="delete"
-                                as="button"
-                                onClick={(e) => {
-                                  function handleDelete(id) {
-                                    if (confirm("Are you sure you want to delete this resume?")) {
-                                    Inertia.delete(`/resumes/${id}`)
-                                }
-                                }
-                                }}
-                            >
-                                Delete
-                            </Link>
+                            <button
+                            onClick={() => {
+                                if (confirm("Are you sure you want to delete this resume?")) {
+                                    Inertia.delete(`/resumes/${cv.id}`)}}}
+                                    >Delete
+                            </button>
+
                         </li>
                     ))}
             </ul>
